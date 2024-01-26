@@ -1,42 +1,42 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpanwer : MonoBehaviour
 {
-    // ¿ªÇÒ: ÀÏÁ¤½Ã°£¸¶´Ù ÀûÀ» ÇÁ¸®ÆÕÀ¸·ÎºÎÅÍ »ı¼ºÇØ¼­ ³» À§Ä¡¿¡ °®´Ù ³õ°í ½Í´Ù.
-    // ÇÊ¿ä ¼Ó¼º
-    // - Àû ÇÁ¸®ÆÕ
-    // - ÀÏÁ¤½Ã°£
-    // - ÇöÀç½Ã°£
+    // ì—­í• : ì¼ì •ì‹œê°„ë§ˆë‹¤ ì ì„ í”„ë¦¬íŒ¹ìœ¼ë¡œë¶€í„° ìƒì„±í•´ì„œ ë‚´ ìœ„ì¹˜ì— ê°–ë‹¤ ë†“ê³  ì‹¶ë‹¤.
+    // í•„ìš” ì†ì„±
+    // - ì  í”„ë¦¬íŒ¹
+    // - ì¼ì •ì‹œê°„
+    // - í˜„ì¬ì‹œê°„
     
 
-    // ±¸Çö ¼ø¼­:
-    // 1. ½Ã°£ÀÌ Èå¸£´Ù°¡
-    // 2. ¸¸¾à¿¡ ½Ã°£ÀÌ ÀÏÁ¤½Ã°£ÀÌ µÇ¸é
-    // 3. ÇÁ¸®ÆÕÀ¸·ÎºÎÅÍ ÀûÀ» »ı¼ºÇÑ´Ù.
-    // 4. »ı¼ºÇÑ ÀûÀÇ À§Ä¡¸¦ ³» À§Ä¡·Î ¹Ù²Û´Ù.
+    // êµ¬í˜„ ìˆœì„œ:
+    // 1. ì‹œê°„ì´ íë¥´ë‹¤ê°€
+    // 2. ë§Œì•½ì— ì‹œê°„ì´ ì¼ì •ì‹œê°„ì´ ë˜ë©´
+    // 3. í”„ë¦¬íŒ¹ìœ¼ë¡œë¶€í„° ì ì„ ìƒì„±í•œë‹¤.
+    // 4. ìƒì„±í•œ ì ì˜ ìœ„ì¹˜ë¥¼ ë‚´ ìœ„ì¹˜ë¡œ ë°”ê¾¼ë‹¤.
 
-    [Header("Àû ÇÁ¸®ÆÕ")]
-    public GameObject EnemyPrefab; //Àû ÇÁ¸®ÆÕ
+    [Header("ì  í”„ë¦¬íŒ¹")]
+    public GameObject EnemyPrefab; //ì  í”„ë¦¬íŒ¹
     public GameObject EnemyPrefabTarget;
     public GameObject EnemyFollow;
 
-    [Header("Å¸ÀÌ¸Ó")]
-    public float SpawnTime; //ÀÏÁ¤½Ã°£
-    public float Timer; //ÇöÀç½Ã°£
+    [Header("íƒ€ì´ë¨¸")]
+    public float SpawnTime; //ì¼ì •ì‹œê°„
+    public float Timer; //í˜„ì¬ì‹œê°„
 
     
-    // ¸ñÇ¥: Àû »ı¼º ½Ã°£À» ·£´ıÇÏ°Ô ÇÏ°í ½Í´Ù.
-    // ÇÊ¿ä ¼Ó¼º:
-    // - ÃÖ¼Ò ½Ã°£
-    // - ÃÖ´ë ½Ã°£
+    // ëª©í‘œ: ì  ìƒì„± ì‹œê°„ì„ ëœë¤í•˜ê²Œ í•˜ê³  ì‹¶ë‹¤.
+    // í•„ìš” ì†ì„±:
+    // - ìµœì†Œ ì‹œê°„
+    // - ìµœëŒ€ ì‹œê°„
     public float MinTime = 0.5f;
     public float MaxTime = 1.5f;
     
     void SetRandomTime()
     {
-        // ½ÃÀÛÇÒ ¶§ Àû »ı¼º ½Ã°£À» ·£´ıÇÏ°Ô ¼³Á¤ÇÑ´Ù.
+        // ì‹œì‘í•  ë•Œ ì  ìƒì„± ì‹œê°„ì„ ëœë¤í•˜ê²Œ ì„¤ì •í•œë‹¤.
         SpawnTime = Random.Range(MinTime, MaxTime);
 
         Timer = SpawnTime;
@@ -50,17 +50,17 @@ public class EnemySpanwer : MonoBehaviour
 
     void Update()
     {
-        // Å¸ÀÌ¸Ó °è»ê
+        // íƒ€ì´ë¨¸ ê³„ì‚°
         Timer -= Time.deltaTime;
 
-        //1. Å¸ÀÌ¸Ó°¡ 0º¸´Ù ÀÛÀº »óÅÂ¿¡¼­ ¹ß»ç ¹öÆ°À» ´©¸£¸é
+        //1. íƒ€ì´ë¨¸ê°€ 0ë³´ë‹¤ ì‘ì€ ìƒíƒœì—ì„œ ë°œì‚¬ ë²„íŠ¼ì„ ëˆ„ë¥´ë©´
         if (Timer <= 0 )
         {
-            //30% È®·ü·Î TargetÇü, ³ª¸ÓÁö È®·ü(70%) BasicÇü Àû »ı¼ºÇÏ°Ô ÇÏ±â
-            GameObject enemy = null; //¿ÀºêÁ§Æ® Åº»ı.
+            //30% í™•ë¥ ë¡œ Targetí˜•, ë‚˜ë¨¸ì§€ í™•ë¥ (70%) Basicí˜• ì  ìƒì„±í•˜ê²Œ í•˜ê¸°
+            GameObject enemy = null; //ì˜¤ë¸Œì íŠ¸ íƒ„ìƒ.
             int randomNumber = Random.Range(0, 10); // 0,1,2.3,4,5,6,7,8,9
             
-            //10 % È®·ü·Î ÀûÀÌ ³¯ µû¶ó¿À´Â FollowÇü Àû »ı¼ºÇÏ±â
+            //10 % í™•ë¥ ë¡œ ì ì´ ë‚  ë”°ë¼ì˜¤ëŠ” Followí˜• ì  ìƒì„±í•˜ê¸°
             if (randomNumber < 1)
             {
                 enemy = Instantiate(EnemyFollow);
@@ -75,7 +75,7 @@ public class EnemySpanwer : MonoBehaviour
                 enemy = Instantiate(EnemyPrefab);
             }
 
-                // 2. À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù.
+                // 2. ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤.
                 enemy.transform.position = this.transform.position;
 
             SetRandomTime();

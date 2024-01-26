@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
@@ -7,9 +7,9 @@ public class Item : MonoBehaviour
 {
     private const float FOLLOW_TIME = 3F;
 
-    public float _timer = 0f; // ½Ã°£À» Ã¼Å©ÇÒ º¯¼ö
+    public float _timer = 0f; // ì‹œê°„ì„ ì²´í¬í•  ë³€ìˆ˜
 
-    public int MyType = 0; // 0: Ã¼·ÂÀ» ¿Ã·ÁÁÖ´Â Å¸ÀÔ, 1: ½ºÇÇµå¸¦ ¿Ã·ÁÁÖ´Â Å¸ÀÔ
+    public int MyType = 0; // 0: ì²´ë ¥ì„ ì˜¬ë ¤ì£¼ëŠ” íƒ€ì…, 1: ìŠ¤í”¼ë“œë¥¼ ì˜¬ë ¤ì£¼ëŠ” íƒ€ì…
 
     public Animator MyAnimator;
 
@@ -29,12 +29,12 @@ public class Item : MonoBehaviour
 
         if (_timer >= FOLLOW_TIME)
         {
-            // 1. ÇÃ·¹ÀÌ¾î °ÔÀÓ¿ÀºêÁ§Æ®¸¦ Ã£°í
+            // 1. í”Œë ˆì´ì–´ ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ê³ 
             GameObject target = GameObject.FindGameObjectWithTag("Player");
-            // 2. ¹æÇâÀ» Á¤ÇÏ°í
+            // 2. ë°©í–¥ì„ ì •í•˜ê³ 
             Vector3 dir = target.transform.position - this.transform.position;
             dir.Normalize();
-            // 3. ½ºÇÇµå¿¡ ¸Â°Ô ÀÌµ¿
+            // 3. ìŠ¤í”¼ë“œì— ë§ê²Œ ì´ë™
             Vector3 newPosition = transform.position + dir * 10f * Time.deltaTime;
             this.transform.position = newPosition;
         }
@@ -43,35 +43,37 @@ public class Item : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision Enter!");
+        //Debug.Log("Collision Enter!");
     }
 
-    // (´Ù¸¥ Äİ¶óÀÌ´õ¿¡ ÀÇÇØ) Æ®¸®°Å°¡ ¹ßµ¿µÉ ¶§
+    // (ë‹¤ë¥¸ ì½œë¼ì´ë”ì— ì˜í•´) íŠ¸ë¦¬ê±°ê°€ ë°œë™ë  ë•Œ
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        Debug.Log("Æ®¸®°Å ½ÃÀÛ!");
+        //Debug.Log("íŠ¸ë¦¬ê±° ì‹œì‘!");
         
-            //Destroy(this.gameObject); //Layer, isTrigger ÀÌ¿ëÇÏ¸é if(player¸¸³µÀ» ¶§) Á¶°Ç¹® ¾µ ÇÊ¿ä ¾øÀ½
+            //Destroy(this.gameObject); //Layer, isTrigger ì´ìš©í•˜ë©´ if(playerë§Œë‚¬ì„ ë•Œ) ì¡°ê±´ë¬¸ ì“¸ í•„ìš” ì—†ìŒ
     }
 
-    // (´Ù¸¥ Äİ¶óÀÌ´õ¿¡ ÀÇÇØ) Æ®¸®°Å°¡ ¹ßµ¿ ÁßÀÏ ¶§
+    // (ë‹¤ë¥¸ ì½œë¼ì´ë”ì— ì˜í•´) íŠ¸ë¦¬ê±°ê°€ ë°œë™ ì¤‘ì¼ ë•Œ
     private void OnTriggerStay2D(Collider2D otherCollider)
     {
         _timer += Time.deltaTime;
         if ( _timer >= 1.0) 
         {
-            if ( MyType == 0) // 0: Ã¼·ÂÀ» ¿Ã·ÁÁÖ´Â Å¸ÀÔ
+            if ( MyType == 0) // 0: ì²´ë ¥ì„ ì˜¬ë ¤ì£¼ëŠ” íƒ€ì…
             {
                 Player player = otherCollider.gameObject.GetComponent<Player>();
-                player.Health++;
-                Debug.Log($"ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â:{player.Health}");
+                player.AddHealth(1);
+                Debug.Log($"í˜„ì¬ í”Œë ˆì´ì–´ì˜ ì²´ë ¥:{player.GetHealth()}");
             }
 
-            else if ( MyType == 1) // 1: ½ºÇÇµå¸¦ ¿Ã·ÁÁÖ´Â Å¸ÀÔ
+            else if ( MyType == 1) // 1: ìŠ¤í”¼ë“œë¥¼ ì˜¬ë ¤ì£¼ëŠ” íƒ€ì…
             {
-                // Å¸ÀÔÀÌ 1ÀÌ¸é ÇÃ·¹ÀÌ¾îÀÇ ½ºÇÇµå ¿Ã·ÁÁÖ±â
+                // íƒ€ì…ì´ 1ì´ë©´ í”Œë ˆì´ì–´ì˜ ìŠ¤í”¼ë“œ ì˜¬ë ¤ì£¼ê¸°
                 PlayerMove playerMove = otherCollider.gameObject.GetComponent<PlayerMove>();
-                playerMove.Speed += 1;
+                //playerMove.SetSpeed(playerMove.GetSpeed() + 1);
+                playerMove.AddSpeed(1);
+                Debug.Log($"í˜„ì¬ í”Œë ˆì´ì–´ì˜ ìŠ¤í”¼ë“œ:{playerMove.GetSpeed()}");
             }
 
             Destroy(this.gameObject);
@@ -80,14 +82,14 @@ public class Item : MonoBehaviour
 
         }
 
-            Debug.Log("Æ®¸®°Å Áß!");
+            //Debug.Log("íŠ¸ë¦¬ê±° ì¤‘!");
     }
 
-    // (´Ù¸¥ Äİ¶óÀÌ´õ¿¡ ÀÇÇØ) Æ®¸®°Å°¡ ³¡³µÀ» ¶§
+    // (ë‹¤ë¥¸ ì½œë¼ì´ë”ì— ì˜í•´) íŠ¸ë¦¬ê±°ê°€ ëë‚¬ì„ ë•Œ
     private void OnTriggerExit2D(Collider2D otherCollider)
     {
         _timer = 0.0f;
-        Debug.Log("Æ®¸®°Å Á¾·á!");
+        //Debug.Log("íŠ¸ë¦¬ê±° ì¢…ë£Œ!");
     }
 }
  

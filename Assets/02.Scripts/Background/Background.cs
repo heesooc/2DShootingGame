@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,18 +8,18 @@ public class Background : MonoBehaviour
 
     private void Update()
     {
-        // ¹è°æ ½ºÅ©·Ñ
-        // -> °ÔÀÓ È­¸é¿¡¼­ ¹è°æ ÀÌ¹ÌÁö¸¦ ÀÏÁ¤ÇÑ ¼Óµµ·Î
-        // ¿òÁ÷¿© Ä³¸¯ÅÍ³ª ¸ó½ºÅÍ µîÀÇ ¿òÁ÷ÀÓÀ» ´õ µ¿ÀûÀ¸·Î ¸¸µé¾îÁÖ´Â ±â¼ú
-        // (Ä³¸¯ÅÍ´Â ±×´ë·Î µÎ°í ¹è°æ¸¸ ¿òÁ÷¿©¼­ Ä³¸¯ÅÍ°¡ ¿òÁ÷ÀÌ´Â °ÅÃ³·³ ´«¼ÓÀÓÀ» ÇÑ´Ù. )
+        // ë°°ê²½ ìŠ¤í¬ë¡¤
+        // -> ê²Œìž„ í™”ë©´ì—ì„œ ë°°ê²½ ì´ë¯¸ì§€ë¥¼ ì¼ì •í•œ ì†ë„ë¡œ
+        // ì›€ì§ì—¬ ìºë¦­í„°ë‚˜ ëª¬ìŠ¤í„° ë“±ì˜ ì›€ì§ìž„ì„ ë” ë™ì ìœ¼ë¡œ ë§Œë“¤ì–´ì£¼ëŠ” ê¸°ìˆ 
+        // (ìºë¦­í„°ëŠ” ê·¸ëŒ€ë¡œ ë‘ê³  ë°°ê²½ë§Œ ì›€ì§ì—¬ì„œ ìºë¦­í„°ê°€ ì›€ì§ì´ëŠ” ê±°ì²˜ëŸ¼ ëˆˆì†ìž„ì„ í•œë‹¤. )
 
-        // ¸ñÇ¥: ¾Æ·¡·Î ÀÌµ¿ÇÏ°í ½Í´Ù.
-        // ¼ø¼­:
-        // 1. ¹æÇâÀ» ±¸ÇÏ°í
+        // ëª©í‘œ: ì•„ëž˜ë¡œ ì´ë™í•˜ê³  ì‹¶ë‹¤.
+        // ìˆœì„œ:
+        // 1. ë°©í–¥ì„ êµ¬í•˜ê³ 
         Vector2 dir = Vector2.down;
 
-        // 2. ÀÌµ¿ÇÑ´Ù. 
-        // »õ·Î¿î À§Ä¡ = ÇöÀç À§Ä¡ + ¼Óµµ * ½Ã°£
+        // 2. ì´ë™í•œë‹¤. 
+        // ìƒˆë¡œìš´ ìœ„ì¹˜ = í˜„ìž¬ ìœ„ì¹˜ + ì†ë„ * ì‹œê°„
         Vector2 newPosition = transform.position + (Vector3)(dir * Speed) * Time.deltaTime;
 
         if(newPosition.y < -12.6)

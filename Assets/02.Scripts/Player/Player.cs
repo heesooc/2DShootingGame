@@ -1,17 +1,17 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int Health = 3;
+    private int Health = 3;
 
     public AudioSource HitSource;
 
     private void Start()
     {
-        /*// GetComponent<ÄÄÆ÷³ÍÆ® Å¸ÀÔ > (); -> °ÔÀÓ ¿ÀºêÁ§Æ®ÀÇ ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿À´Â ¸Ş¼­µå
+        /*// GetComponent<ì»´í¬ë„ŒíŠ¸ íƒ€ì… > (); -> ê²Œì„ ì˜¤ë¸Œì íŠ¸ì˜ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜¤ëŠ” ë©”ì„œë“œ
         SpriteRenderer sr = GetComponent<SpriteRenderer>();
         sr.color = Color.white;
 
@@ -28,7 +28,22 @@ public class Player : MonoBehaviour
     public void OnCollosionEnter2D(Collider2D collision)
     {
             HitSource.Play();
-        //todo: »ç¿îµå (±â·ÏÇØµÎ¾î¼­ todoÅ°¿öµå·Î ±İ¹æ Ã£±â)
+        //todo: ì‚¬ìš´ë“œ (ê¸°ë¡í•´ë‘ì–´ì„œ todoí‚¤ì›Œë“œë¡œ ê¸ˆë°© ì°¾ê¸°)
         
+    }
+
+    public int GetHealth()
+    {
+        return Health;
+    }
+
+    public void SetHealth(int health)
+    {
+        Health = health;
+    }
+
+    public void AddHealth(int health)
+    {
+        Health += health;
     }
 }

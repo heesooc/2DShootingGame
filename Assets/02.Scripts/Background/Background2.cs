@@ -1,24 +1,24 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Background2 : MonoBehaviour
 {
-    // ¸ñÇ¥: ¸ÓÅÍ¸®¾óÀÇ ¿ÀÇÁ¼Â(Offset)À» ÀÌ¿ëÇØ¼­ ¹è°æ ½ºÅ©·ÑÀÌ µÇµµ·Ï ÇÏ°í ½Í´Ù.
-    // ÇÊ¿ä ¼Ó¼º
-    // - ¸ÓÅÍ¸®¾ó
-    // - ½ºÅ©·Ñ ¼Óµµ
+    // ëª©í‘œ: ë¨¸í„°ë¦¬ì–¼ì˜ ì˜¤í”„ì…‹(Offset)ì„ ì´ìš©í•´ì„œ ë°°ê²½ ìŠ¤í¬ë¡¤ì´ ë˜ë„ë¡ í•˜ê³  ì‹¶ë‹¤.
+    // í•„ìš” ì†ì„±
+    // - ë¨¸í„°ë¦¬ì–¼
+    // - ìŠ¤í¬ë¡¤ ì†ë„
     public Material MyMaterial;
     public float ScrollSpeed = 0.2f;
 
-    // ±¸Çö ¼ø¼­
-    // 0. ¸Å ÇÁ·¹ÀÓ¸¶´Ù (Update())
+    // êµ¬í˜„ ìˆœì„œ
+    // 0. ë§¤ í”„ë ˆì„ë§ˆë‹¤ (Update())
     private void Update()
     {
-        // 1. ¹æÇâÀ» ±¸ÇÑ´Ù.
+        // 1. ë°©í–¥ì„ êµ¬í•œë‹¤.
         Vector2 dir = Vector2.up;
 
-        // 2. (¿ÀÇÁ¼ÂÀ» º¯°æÇØ¼­) ½ºÅ©·ÑÀ» ÇÑ´Ù. 
+        // 2. (ì˜¤í”„ì…‹ì„ ë³€ê²½í•´ì„œ) ìŠ¤í¬ë¡¤ì„ í•œë‹¤. 
         MyMaterial.mainTextureOffset += dir * ScrollSpeed * Time.deltaTime;
     }
 }
