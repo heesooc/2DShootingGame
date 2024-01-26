@@ -42,8 +42,19 @@ public class Player : MonoBehaviour
         Health = health;
     }
 
-    public void AddHealth(int health)
+    public void AddHealth(int amount)
     {
-        Health += health;
+        if (amount <= 0)
+        {
+            return;
+        }
+        Health += amount;
+        Debug.Log($"플레이어 증가된 체력: {Health}");
+    }
+
+    public void DecreaseHealth(int amount)
+    {
+        Health -= amount;
+        Debug.Log($"플레이어 감소된 체력: {Health}");
     }
 }

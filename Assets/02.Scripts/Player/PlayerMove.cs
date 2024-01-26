@@ -141,10 +141,11 @@ public class PlayerMove : MonoBehaviour
     }
 
 
-    public void AddSpeed(float speed)
+    public void AddSpeed(float amount)
     {
-        Speed += speed;
+        Speed += amount;
+        Debug.Log($"플레이어 속도: {Speed}");
     }
-    
+
 }
 

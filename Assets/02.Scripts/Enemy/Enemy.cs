@@ -154,11 +154,11 @@ public class Enemy : MonoBehaviour
             // 플레이어 스크립트를 가져온다.
             Player player = collision.collider.GetComponent<Player>();
             // 플레이어 체력을 -= 1
-            player.SetHealth(player.GetHealth() - 1); 
+            //player.SetHealth(player.GetHealth() - 1);
+            player.DecreaseHealth(1);
 
-            
-           // 플레이어 체력이 적다면..
-            if (player.GetHealth() == 0)
+            // 플레이어 체력이 적다면..
+            if (player.GetHealth() <= 0)
             {
                 Destroy(collision.collider.gameObject);
             }

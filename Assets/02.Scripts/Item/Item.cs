@@ -63,8 +63,8 @@ public class Item : MonoBehaviour
             if ( MyType == 0) // 0: 체력을 올려주는 타입
             {
                 Player player = otherCollider.gameObject.GetComponent<Player>();
+                //player.AddHealth(player.GetHealth()); //2배값됨
                 player.AddHealth(1);
-                Debug.Log($"현재 플레이어의 체력:{player.GetHealth()}");
             }
 
             else if ( MyType == 1) // 1: 스피드를 올려주는 타입
@@ -73,7 +73,6 @@ public class Item : MonoBehaviour
                 PlayerMove playerMove = otherCollider.gameObject.GetComponent<PlayerMove>();
                 //playerMove.SetSpeed(playerMove.GetSpeed() + 1);
                 playerMove.AddSpeed(1);
-                Debug.Log($"현재 플레이어의 스피드:{playerMove.GetSpeed()}");
             }
 
             Destroy(this.gameObject);
