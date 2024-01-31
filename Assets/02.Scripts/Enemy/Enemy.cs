@@ -6,7 +6,7 @@ public enum EnemyType // 적 타입 '열거형'
 {
     Basic, // EnemyType.Basic 타입: 아래로 이동,
     Target,  // EnemyType.Target 타입: '처음' 태어났을 때 플레이어가 있는 방향으로 이동
-    Follow
+    Follow  // EnemyType.Follow 타입: 계속 플레이어가 있는 방향으로 이동
 }
 public class Enemy : MonoBehaviour
 {
@@ -77,9 +77,9 @@ public class Enemy : MonoBehaviour
             // 1. 각도를 구한다. 
             //tanθ = y/x    ->  θ = y/x * atan(탄젠트의 역함수)
             float radian = Mathf.Atan2(_dir.y, _dir.x);
-            Debug.Log(radian); // '호'도법 -> 라디안 값
+            //Debug.Log(radian); // '호'도법 -> 라디안 값
             float degree = radian * Mathf.Rad2Deg;
-            Debug.Log(degree);
+            //Debug.Log(degree);
 
             // 2. 각도에 맞게 회전한다.
             //transform.rotation = Quaternion.Euler(new Vector3(0, 0, degree+90)); //이미지 리소스를 따라 90도 더해줌
@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
             //tanθ = y/x    ->  θ = y/x * atan(탄젠트의 역함수)
             float radian = Mathf.Atan2(_dir.y, _dir.x); // '호'도법 -> 라디안 값
             float degree = radian * Mathf.Rad2Deg;
-            Debug.Log(degree);
+            //Debug.Log(degree);
 
             // 2. 각도에 맞게 회전한다.
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, degree + 90)); //이미지 리소스를 따라 90도 더해줌
