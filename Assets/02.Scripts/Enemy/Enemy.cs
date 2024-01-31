@@ -77,9 +77,9 @@ public class Enemy : MonoBehaviour
             // 1. 각도를 구한다. 
             //tanθ = y/x    ->  θ = y/x * atan(탄젠트의 역함수)
             float radian = Mathf.Atan2(_dir.y, _dir.x);
-            //Debug.Log(radian); // '호'도법 -> 라디안 값
+            Debug.Log(radian); // '호'도법 -> 라디안 값
             float degree = radian * Mathf.Rad2Deg;
-            //Debug.Log(degree);
+            Debug.Log(degree);
 
             // 2. 각도에 맞게 회전한다.
             //transform.rotation = Quaternion.Euler(new Vector3(0, 0, degree+90)); //이미지 리소스를 따라 90도 더해줌

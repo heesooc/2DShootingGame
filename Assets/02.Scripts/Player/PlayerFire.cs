@@ -72,7 +72,7 @@ public class PlayerFire : MonoBehaviour
 
     public AudioSource FireSource; // AudioSource: 오디오 클립을 재생시켜주는 컴포넌트
 
-    public GameObject BoomPrefab; //**궁극기**
+    public GameObject SpecialMoveBoomPrefab; //필살기붐
     private void CheckAutoMode()
     {
         // 1. 1/2 버튼 입력을 판단한다.
@@ -92,17 +92,6 @@ public class PlayerFire : MonoBehaviour
 
     private void Start()
     {
-        // 전처리 단계: 코드가 컴파일(해석)되기 전에 미리 처리되는 단계
-        // 전처리문 코드를 이용해서 미리 처리되는 코드를 작성할 수 있다. 
-        // C#의 모든 전처리 코드는 '#'으로 시작한다. (#if, #elif, #endif)
-
-/*#if UNITY_EDITOR || UNITY_STANDALONE
-        GameObject.Find("Joystick canvas XYBZ").SetActive(false);
-#endif*/
-#if UNITY_ANDROID
-    Debug.Log("안드로이드 입니다.");
-#endif
-
         Timer = 0f;
         AutoMode = false;
     }
@@ -117,30 +106,22 @@ public class PlayerFire : MonoBehaviour
         BoomTimer -= Time.deltaTime;
 
         //1. 타이머가 0보다 작은 상태에서 발사 버튼을 누르면
-        bool ready = AutoMode || Input.GetKeyDown(KeyCode.Space); //자동or스페이스바
-        if ( ready ) //공격
-        {
-            Fire();
-        }
-
-        
-        if (Input.GetKeyDown(KeyCode.Alpha3)) //궁극기
-        {
-            Boom();
-        }
-        
-    }
-
-    private void Fire()
-    {
-        if (Timer <= 0) 
+        bool ready = AutoMode || Input.GetKeyDown(KeyCode.Space);
+        if (Timer <= 0 && ready)
         {
             //todo: 사운드 (기록해두어서 todo키워드로 금방 찾기)
             FireSource.Play();
 
             // 타이머 초기화
             Timer = COOL_TIME;
-            
+
+            //2. 프리팹으로부터 총알을 동적으로 만들고,
+            //GameObject bullet = Instantiate(BulletPrefab); // Instantiate = 인스턴스화(객체화 비슷) <- 새로운 것 딱 하나.
+            //GameObject bullet2 = Instantiate(BulletPrefab2);
+
+            //3. 만든 총알의 위치를 총구의 위치로 바꾼다.
+            //bullet.transform.position = Muzzle.transform.position;
+            //bullet2.transform.position = Muzzle2.transform.position;
 
             // 목표: 총구 개수 만큼 총알을 풀에서 꺼내쓴다.
             // 순서:
@@ -166,64 +147,45 @@ public class PlayerFire : MonoBehaviour
                 // 3. 총알을 킨다. (발사한다)
                 bullet.gameObject.SetActive(true);
             }
-
-            foreach (GameObject subMuzzle in SubMuzzles) // 서브총구
-            {
-                // 1. 꺼져 있는 총알을 찾아 꺼낸다.
-                Bullet bullet = null;
-                foreach (Bullet b in _bulletPool)
-                {
-                    // 만약에 꺼져(비활성화되어) 있고 && 서브 총알이라면..
-                    if (b.gameObject.activeInHierarchy == false && b.BType == BulletType.Sub)
+                foreach (GameObject subMuzzle in SubMuzzles)
                     {
-                        bullet = b;
-                        break; // 찾았기 때문에 그 뒤까지 찾을 필요가 없다.
+                    // 1. 꺼져 있는 총알을 찾아 꺼낸다.
+                    Bullet bullet = null;
+                    foreach (Bullet b in _bulletPool)
+                    {
+                        // 만약에 꺼져(비활성화되어) 있고 && 서브 총알이라면..
+                        if (b.gameObject.activeInHierarchy == false && b.BType == BulletType.Sub)
+                        {
+                            bullet = b;
+                            break; // 찾았기 때문에 그 뒤까지 찾을 필요가 없다.
+                        }
                     }
+
+                    // 2. 꺼낸 총알의 위치를 각 총구의 위치로 바꾼다.
+                    bullet.transform.position = subMuzzle.transform.position;
+
+                    // 3. 총알을 킨다. (발사한다)
+                    bullet.gameObject.SetActive(true);
+
+
+
+
                 }
+            }
 
-                // 2. 꺼낸 총알의 위치를 각 총구의 위치로 바꾼다.
-                bullet.transform.position = subMuzzle.transform.position;
-
-                // 3. 총알을 킨다. (발사한다)
-                bullet.gameObject.SetActive(true);
-
+            if (Input.GetKeyDown(KeyCode.Alpha3) && BoomTimer <= 0f)
+            {
+                // 타이머 초기화
+                BoomTimer = BOOM_COOL_TIME;
+                // 3번 키→ 필살기 공격 모드
+                GameObject vfx = Instantiate(SpecialMoveBoomPrefab);
+                vfx.transform.position = new Vector2(0, 0);
+            }
+            // if (BoomTimer <= 2f)
+            {
+                //Destroy(SpecialMoveBoomPrefab);
             }
         }
     }
-    private void Boom() //궁극기
-    {
-        if ( BoomTimer <= 0f)
-        {
-            // 타이머 초기화
-            BoomTimer = BOOM_COOL_TIME;
-            // 3번 키→ 필살기 공격 모드
-            GameObject vfx = Instantiate(BoomPrefab);
-            vfx.transform.position = new Vector2(0, 0);
-        }
-        
-    }
-
-    // 조이스틱
-    // 총알 발사
-    public void OnClickXButton()
-    {
-        Debug.Log("X버튼이 클릭되었습니다.");
-        Fire();
-    }
-
-    // 자동 공격 ON/OFF
-    public void OnClickYButton()
-    {
-        Debug.Log("Y버튼이 클릭되었습니다.");
-        AutoMode = !AutoMode;
-    }
-
-    // 궁극기 사용
-    public void OnClickBButton()
-    {
-        Debug.Log("B버튼이 클릭되었습니다.");
-        Boom();
-    }
-}
 
 

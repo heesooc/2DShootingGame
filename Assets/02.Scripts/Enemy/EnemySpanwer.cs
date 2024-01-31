@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class EnemySpanwer : MonoBehaviour
@@ -53,13 +54,13 @@ public class EnemySpanwer : MonoBehaviour
         }
         for (int i = 0; i < PoolSize; i++)
         {
-            GameObject enemyObject = Instantiate(EnemyPrefabTarget); // 타겟 생성
+            GameObject enemyObject = Instantiate(EnemyPrefabTarget); // 베이직 생성
             enemyObject.SetActive(false);
             EnemyPool.Add(enemyObject.GetComponent<Enemy>());
         }
         for (int i = 0; i < PoolSize; i++)
         {
-            GameObject enemyObject = Instantiate(EnemyFollow); // 팔로우 생성
+            GameObject enemyObject = Instantiate(EnemyFollow); // 베이직 생성
             enemyObject.SetActive(false);
             EnemyPool.Add(enemyObject.GetComponent<Enemy>());
         }
@@ -134,14 +135,12 @@ public class EnemySpanwer : MonoBehaviour
                     }
                 }
             }
-           
-            if (enemy != null)
-            {
-                enemy.gameObject.SetActive(true);
-                enemy.transform.position = this.transform.position;
-                SetRandomTime();
-            }
-            
+
+            enemy.gameObject.SetActive(true);
+
+            enemy.transform.position = this.transform.position;
+
+            SetRandomTime();
         }
     }
 }
