@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 /* 
@@ -29,13 +30,53 @@ public class ScoreManager : MonoBehaviour
     // - 현재 점수를 표시할 UI
     public Text ScoreTextUI;
     // - 현재 점수를 기억할 변수
-    private int _score = 0;
+    private int _score=0;
+    public int Score
+    {
+        get
+        {
+            return _score;
+        }
+        set
+        {
+            if (value < 0)
+            {
+                return;
+            }
+            _score = value;
+
+            // 목표: 스코어를 화면에 표시한다.
+            ScoreTextUI.text = $"점수: {_score}";
+
+            // 목표: 최고 점수를 갱신하고 UI에 표시하고 싶다. 
+            // 1. 만약에 현재 점수가 최고 점수보다 크다면
+            if (_score > BestScore)
+            {
+                // 2. 최고 점수를 갱신하고,
+                BestScore = _score;
+
+                // 목표: 최고 점수를 저장
+                // 'PlayerPrefs' 클래스를 사용 //Prefs 뜻: 환경설정
+                // -> 데이터를 '키(Key)'와 '값(Value)'의 형태로 저장하는 클래스
+                // 저장할 수 있는 데이터 타입: int, float, string
+                // 타입별로 저장/로드가 가능한 Set/Get 메서드가 있다.
+                PlayerPrefs.SetInt("BestScore", BestScore);
+
+                // 3. UI에 표시한다.
+                BestScoreTextUI.text = $"최고 점수: {_score}";
+            }
+        }
+    }
+
 
     // 최고 점수 관련 속성
     public Text BestScoreTextUI;
     public int BestScore = 0;
 
-    public static ScoreManager Instance; // ScoreManager 객체 // static ScoreManager A;
+    //ScoreManager가 점수를 관리하는 유일한 매니저(관리자)이므로 싱글톤을 적용하는게 편하다.
+    public static ScoreManager Instance { get; private set; } // ScoreManager 객체 // static ScoreManager A;
+    // 자동 구현 프로퍼티 : 멤버 변수에 기본적인 Get, Set 작업만을 할 때 사용한다.
+    // private 접근 지정자를 이용하여 get, set 프로퍼티 접근 지정을 할 수 있다. 
     private void Awake()
     {
 
@@ -56,7 +97,8 @@ public class ScoreManager : MonoBehaviour
         else
         {
             Debug.Log("이미 있다!");
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
     // 목표: 게임을 시작할 때 최고 점수를 불러오고, UI에 표시하고 싶다.

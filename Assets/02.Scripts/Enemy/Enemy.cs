@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
         //Destroy(this.gameObject); //enemy 무조건죽음, 보조총알에는 2번만에 죽어야함
         
         // 플레이어는 적과 3번 충돌하면 죽게 만들기
-        if (collision.collider.tag == "Player")
+        if (collision.collider.CompareTag("Player"))
         {
             Death();
 
@@ -160,11 +160,12 @@ public class Enemy : MonoBehaviour
             // 플레이어 체력이 적다면..
             if (player.GetHealth() <= 0)
             {
-                Destroy(collision.collider.gameObject);
+                //Destroy(collision.collider.gameObject);
+                collision.gameObject.SetActive(false);
             }
 
         }
-        else if (collision.collider.tag == "Bullet") //Tag //enemy와 총알이 부딪혔을 때
+        else if (collision.collider.CompareTag("Bullet")) //Tag //enemy와 총알이 부딪혔을 때
         {
             // 2. 충돌한 enemy를 삭제한다.
             Bullet bullet = collision.collider.GetComponent<Bullet>(); //GetComponent
@@ -177,8 +178,9 @@ public class Enemy : MonoBehaviour
                 Health -= 1;
             }
 
-            Destroy(collision.collider.gameObject);
-
+            // Destroy(collision.collider.gameObject);
+            // 총알 삭제
+            collision.collider.gameObject.SetActive(false);
 
             // 적의 체력이 적다면..
             if (Health <= 0)
@@ -190,6 +192,8 @@ public class Enemy : MonoBehaviour
             {
                     MyAnimator.Play("Hit");
             }
+
+            
         }
 }
    
@@ -208,7 +212,7 @@ public class Enemy : MonoBehaviour
     public void Death() //Death() 함수
     {
         //나죽자
-        Destroy(this.gameObject);
+        gameObject.SetActive(false);
         GameObject vfx = Instantiate(ExplosionVFXPrefab);
         vfx.transform.position = this.transform.position;
 
@@ -223,8 +227,10 @@ public class Enemy : MonoBehaviour
         //Debug.Log(scoreManager.GetScore());
 
         // 싱글톤 객체 참조로 변경
-        ScoreManager.Instance.AddScore();
-
+        //ScoreManager.Instance.AddScore();
+        ScoreManager.Instance.Score += 1; //여기서 더하기 1
+        
+        
         
         
     }

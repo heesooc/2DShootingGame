@@ -23,7 +23,8 @@ public class Boom : MonoBehaviour
         _deathTimer += Time.deltaTime;
         if (_deathTimer > DEATH_TIME)
         {
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
     }
 

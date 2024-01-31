@@ -102,7 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8deb3f39e32a5324692a8c088f2e9d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 3
   HitSource: {fileID: 5414280116732470961}
 --- !u!114 &276024927640612043
 MonoBehaviour:
@@ -120,7 +119,7 @@ MonoBehaviour:
   ItemPrefab_Health: {fileID: 8306935714805394340, guid: 1bc61f19b1550f241bd46540b538c067, type: 3}
   ItemPrefab_Speed: {fileID: 4387742190960905829, guid: 5cca1270937dde9458d83b89ef8ea453, type: 3}
   Speed: 3
-  EType: 0
+  EType: 1
   _dir: {x: 0, y: 0}
   MyAnimator: {fileID: 3078097899494559794}
   ExplosionVFXPrefab: {fileID: 6926750194946071818, guid: 2d7305cf2fba32a42817e074167bc5f2, type: 3}

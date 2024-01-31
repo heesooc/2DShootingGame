@@ -16,18 +16,55 @@ public class PlayerFire : MonoBehaviour
 
     [Header("총알 프리팹")]
     public GameObject BulletPrefab; //총알 프리팹
-    [Header("보조총알 프리팹")]
-    public GameObject SubBulletPrefab; //총알 프리팹
+    public GameObject SubBulletPrefab; //보조총알 프리팹
+
+    // 목표: 태어날 때 풀에다가 총알을 (풀 사이즈)개 생성한다. //디자인 패턴 - 오브젝트 풀 //풀:웅덩이
+    // 속성:
+    // - 풀 사이즈
+    public int PoolSize = 20;
+    // - 오브젝트(총알) 풀 
+    private List<Bullet> _bulletPool = null;
+    
+    // 순서:
+    // 1. 태어날 때: Awake
+    private void Awake()
+    {
+        // 2. 오브젝트 풀 할당해주고..
+        _bulletPool = new List<Bullet>();
+
+        // 3. 총알 프리팹으로부터 총알을 풀 사이즈만큼 생성해준다.
+        // 3-1. 메인 총알
+        for (int i = 0; i < PoolSize; i++)
+        {
+            GameObject bullet = Instantiate(BulletPrefab);
+            bullet.SetActive(false); // 끈다.
+
+            // 4. 생성한 총알을 풀에다가 넣는다. 
+            _bulletPool.Add(bullet.GetComponent<Bullet>());
+        }
+
+        // 3-2. 서브 총알
+        for (int i = 0; i < PoolSize; i++)
+        {
+            GameObject bullet = Instantiate(SubBulletPrefab);
+            bullet.SetActive(false);
+
+            // 4. 생성한 총알을 풀에다가 넣는다. 
+            _bulletPool.Add(bullet.GetComponent<Bullet>());
+            
+        }
+    }
+
 
     [Header("총구들")]
-    public GameObject[] Muzzles; //총구들
-    public GameObject[] SubMuzzles;
+    public List<GameObject> Muzzles; //총구들
+    public List<GameObject> SubMuzzles; // 보조 총구들
 
     [Header("타이머")]
     public float Timer = 10f;
     public const float COOL_TIME = 0.6f;
 
-    public float BoomTimer = 5f;
+    public float BoomTimer = 0f;
     public const float BOOM_COOL_TIME = 5f;
 
     [Header("자동 모드")]
@@ -62,6 +99,7 @@ public class PlayerFire : MonoBehaviour
     void Update()
     {
         CheckAutoMode();
+        
 
         // 타이머 계산
         Timer -= Time.deltaTime;
@@ -76,39 +114,78 @@ public class PlayerFire : MonoBehaviour
 
             // 타이머 초기화
             Timer = COOL_TIME;
-            
+
             //2. 프리팹으로부터 총알을 동적으로 만들고,
             //GameObject bullet = Instantiate(BulletPrefab); // Instantiate = 인스턴스화(객체화 비슷) <- 새로운 것 딱 하나.
             //GameObject bullet2 = Instantiate(BulletPrefab2);
-            
+
             //3. 만든 총알의 위치를 총구의 위치로 바꾼다.
             //bullet.transform.position = Muzzle.transform.position;
             //bullet2.transform.position = Muzzle2.transform.position;
 
-            // 목표: 총구 개수 만큼 총알을 만들고, 만든 총알의 위치를 각 총구의 위치로 바꾼다.
-            for (int i = 0; i < Muzzles.Length; i++)
+            // 목표: 총구 개수 만큼 총알을 풀에서 꺼내쓴다.
+            // 순서:
+            for (int i = 0; i < Muzzles.Count; i++)
             {
-                // 1. 총알을 만들고
-                GameObject bullet = Instantiate(BulletPrefab);
-                GameObject bullet2 = Instantiate(SubBulletPrefab);
+                // 1. 꺼져 있는 총알을 꺼낸다.
+                Bullet bullet = null;
 
-                // 2. 위치를 설정한다.
+                foreach (Bullet b in _bulletPool)
+                {
+                    // 만약에 꺼져(비활성화되어) 있고 && 메인 총알이라면..
+                    if (b.gameObject.activeInHierarchy == false && b.BType == BulletType.Main)
+                    {
+                        bullet = b;
+                        break; // 찾았기 때문에 그 뒤까지 찾을 필요가 없다.
+                    }
+                }
+
+
+                // 2. 꺼낸 총알의 위치를 각 총구의 위치로 바꾼다.
                 bullet.transform.position = Muzzles[i].transform.position;
-                bullet2.transform.position = SubMuzzles[i].transform.position;
+
+                // 3. 총알을 킨다. (발사한다)
+                bullet.gameObject.SetActive(true);
+            }
+                foreach (GameObject subMuzzle in SubMuzzles)
+                    {
+                    // 1. 꺼져 있는 총알을 찾아 꺼낸다.
+                    Bullet bullet = null;
+                    foreach (Bullet b in _bulletPool)
+                    {
+                        // 만약에 꺼져(비활성화되어) 있고 && 서브 총알이라면..
+                        if (b.gameObject.activeInHierarchy == false && b.BType == BulletType.Sub)
+                        {
+                            bullet = b;
+                            break; // 찾았기 때문에 그 뒤까지 찾을 필요가 없다.
+                        }
+                    }
+
+                    // 2. 꺼낸 총알의 위치를 각 총구의 위치로 바꾼다.
+                    bullet.transform.position = subMuzzle.transform.position;
+
+                    // 3. 총알을 킨다. (발사한다)
+                    bullet.gameObject.SetActive(true);
+
+
+
+
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha3) && BoomTimer <= 0f)
+            {
+                // 타이머 초기화
+                BoomTimer = BOOM_COOL_TIME;
+                // 3번 키→ 필살기 공격 모드
+                GameObject vfx = Instantiate(SpecialMoveBoomPrefab);
+                vfx.transform.position = new Vector2(0, 0);
+            }
+            // if (BoomTimer <= 2f)
+            {
+                //Destroy(SpecialMoveBoomPrefab);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3) && BoomTimer <= 0f)
-        {
-            // 타이머 초기화
-            BoomTimer = BOOM_COOL_TIME;
-            // 3번 키→ 필살기 공격 모드
-            GameObject vfx = Instantiate(SpecialMoveBoomPrefab);
-            vfx.transform.position = new Vector2(0, 0);
-        }
-       // if (BoomTimer <= 2f)
-        {
-            //Destroy(SpecialMoveBoomPrefab);
-        }
     }
-}
+
+

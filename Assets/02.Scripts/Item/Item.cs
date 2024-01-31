@@ -75,7 +75,8 @@ public class Item : MonoBehaviour
                 playerMove.AddSpeed(1);
             }
 
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
+            gameObject.SetActive(false);
             GameObject vfx = Instantiate(EatVFXPrefab);
             vfx.transform.position = otherCollider.transform.position;
 

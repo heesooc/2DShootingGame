@@ -153,7 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScoreTextUI: {fileID: 335568541}
-  Score: 0
   BestScoreTextUI: {fileID: 883635737}
   BestScore: 0
 --- !u!4 &109990247
@@ -208,7 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ecf783c03df4c4fa468d67d120796d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
   MyAnimator: {fileID: 148656562}
 --- !u!212 &148656556
 SpriteRenderer:
@@ -295,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 2874934699309622527, guid: 200f94fce3df0754c9e0698eb5f3a892, type: 3}
   SubBulletPrefab: {fileID: 7769036069571445478, guid: fd666cbd2eaf55245b5d36329a3e6c3b, type: 3}
+  PoolSize: 20
   Muzzles:
   - {fileID: 1370109311}
   - {fileID: 1126408607}
@@ -363,7 +362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8deb3f39e32a5324692a8c088f2e9d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 49
   HitSource: {fileID: 148656564}
 --- !u!50 &148656561
 Rigidbody2D:
@@ -740,6 +738,8 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2734005880806236474, guid: 3ffcbe2153883ea47a245cc349a525df, type: 3}
   EnemyPrefabTarget: {fileID: 5015291765772383481, guid: bb2990b316c7fd84c8c35cccb172e750, type: 3}
   EnemyFollow: {fileID: 5015291765772383481, guid: 632e11183338e6b4a9d879f9cc7df88b, type: 3}
+  PoolSize: 0
+  EnemyPool: []
   SpawnTime: 1.2
   Timer: 10
   MinTime: 0.5
@@ -752,12 +752,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 181914018}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.51, y: 6.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 982110168}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &335568539
 GameObject:
@@ -1578,6 +1578,41 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &982110167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 982110168}
+  m_Layer: 0
+  m_Name: EnemySpanwer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &982110168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982110167}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1190143897}
+  - {fileID: 181914020}
+  - {fileID: 1717344942}
+  - {fileID: 1895359117}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1126408607
 GameObject:
   m_ObjectHideFlags: 0
@@ -1805,12 +1840,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190143896}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.62, y: 6.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 982110168}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1190143898
 MonoBehaviour:
@@ -1827,6 +1862,8 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2734005880806236474, guid: 3ffcbe2153883ea47a245cc349a525df, type: 3}
   EnemyPrefabTarget: {fileID: 5015291765772383481, guid: bb2990b316c7fd84c8c35cccb172e750, type: 3}
   EnemyFollow: {fileID: 5015291765772383481, guid: 632e11183338e6b4a9d879f9cc7df88b, type: 3}
+  PoolSize: 0
+  EnemyPool: []
   SpawnTime: 1.2
   Timer: 10
   MinTime: 0.5
@@ -2198,6 +2235,8 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2734005880806236474, guid: 3ffcbe2153883ea47a245cc349a525df, type: 3}
   EnemyPrefabTarget: {fileID: 5015291765772383481, guid: bb2990b316c7fd84c8c35cccb172e750, type: 3}
   EnemyFollow: {fileID: 5015291765772383481, guid: 632e11183338e6b4a9d879f9cc7df88b, type: 3}
+  PoolSize: 15
+  EnemyPool: []
   SpawnTime: 1.2
   Timer: 10
   MinTime: 0.5
@@ -2210,12 +2249,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1717344940}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.42800003, y: 6.4189997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 982110168}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1727094661
 GameObject:
@@ -2280,6 +2319,8 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2734005880806236474, guid: 3ffcbe2153883ea47a245cc349a525df, type: 3}
   EnemyPrefabTarget: {fileID: 5015291765772383481, guid: bb2990b316c7fd84c8c35cccb172e750, type: 3}
   EnemyFollow: {fileID: 5015291765772383481, guid: 632e11183338e6b4a9d879f9cc7df88b, type: 3}
+  PoolSize: 0
+  EnemyPool: []
   SpawnTime: 1.2
   Timer: 10
   MinTime: 0.5
@@ -2292,12 +2333,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895359115}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.353, y: 6.427, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 982110168}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1961962723
 GameObject:
@@ -2404,10 +2445,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 148656557}
-  - {fileID: 1190143897}
-  - {fileID: 181914020}
-  - {fileID: 1717344942}
-  - {fileID: 1895359117}
   - {fileID: 830305608}
   - {fileID: 1174199134}
   - {fileID: 770785860}
@@ -2415,3 +2452,4 @@ SceneRoots:
   - {fileID: 1392441581}
   - {fileID: 172331970}
   - {fileID: 109990247}
+  - {fileID: 982110168}
