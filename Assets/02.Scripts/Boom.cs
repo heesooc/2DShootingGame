@@ -10,7 +10,7 @@ public class Boom : MonoBehaviour
     void Start()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        Debug.Log(enemies.Length);
+        //Debug.Log(enemies.Length);
         for (int i = 0; i < enemies.Length; i++)
         {
             Enemy enemy =enemies[i].GetComponent<Enemy>();
